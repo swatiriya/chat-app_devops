@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NexChat — Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/dashboard.css"/>
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 28 28" fill="none">
+            <path d="M4 8C4 5.8 5.8 4 8 4h12c2.2 0 4 1.8 4 4v10c0 2.2-1.8 4-4 4H9l-5 4V8z" fill="#fff"/>
+            <circle cx="10" cy="13" r="1.5" fill="#1e3a5f"/>
+            <circle cx="14" cy="13" r="1.5" fill="#1e3a5f"/>
+            <circle cx="18" cy="13" r="1.5" fill="#1e3a5f"/>
+          </svg>
+        </div>
+        <span class="brand-name">NexChat</span>
+      </div>
+      <button class="icon-btn" id="new-chat-btn" title="New chat">+</button>
+    </div>
+
+    <div class="search-box">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" placeholder="Search conversations..." id="search-input"/>
+    </div>
+
+    <div class="nav-section">
+      <span class="nav-label">DIRECT MESSAGES</span>
+      <div class="contacts-list" id="contacts-list">
+        <!-- contacts injected by JS -->
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="user-profile">
+        <div class="avatar online" style="--c:#3b82f6" id="my-avatar">ME</div>
+        <div class="user-info">
+          <span class="user-name" id="my-name">Loading...</span>
+          <span class="user-status">Online</span>
+        </div>
+        <button class="icon-btn logout-btn" title="Logout" onclick="logout()">&#x2192;</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CHAT AREA -->
+  <main class="main-area">
+    <header class="chat-header">
+      <button class="icon-btn menu-toggle" id="menu-toggle">&#9776;</button>
+      <div class="chat-peer">
+        <div class="avatar" style="--c:#6366f1" id="peer-avatar">?</div>
+        <div>
+          <div class="peer-name" id="peer-name">Select a contact</div>
+          <div class="peer-status">
+            <span class="typing-indicator hidden" id="typing-text">typing...</span>
+            <span id="online-status">Offline</span>
+          </div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="icon-btn" title="Voice call">&#128222;</button>
+        <button class="icon-btn" title="Video call">&#127909;</button>
+      </div>
+    </header>
+
+    <section class="messages-area" id="messages-area">
+      <div class="empty-state" id="empty-state">
+        <div class="empty-icon">&#128172;</div>
+        <p>Select a contact to start chatting</p>
+      </div>
+    </section>
+
+    <footer class="input-area">
+      <div class="input-row">
+        <div class="msg-input-wrap">
+          <textarea
+            id="message-input"
+            placeholder="Type a message… (Enter to send)"
+            rows="1"
+            onkeydown="handleKeydown(event)"
+            oninput="autoResize(this)"
+          ></textarea>
+        </div>
+        <button class="send-btn" id="send-btn" onclick="sendMessage()">
+          &#10148;
+        </button>
+      </div>
+    </footer>
+  </main>
+
+  <script src="../js/dashboard.js"></script>
+  <!-- Socket.IO library loaded from your backend -->
+  <script src="http://localhost:5001/socket.io/socket.io.js"></script>
+  <script src="../js/socket.js"></script>
+</body>
+</html>
