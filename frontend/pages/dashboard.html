@@ -1,103 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>NexChat — Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="../css/dashboard.css"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexChat</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/dashboard.css">
 </head>
+<script src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js" type="module"></script>
 <body>
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-      <div class="brand">
-        <div class="brand-icon">
-          <svg width="20" height="20" viewBox="0 0 28 28" fill="none">
-            <path d="M4 8C4 5.8 5.8 4 8 4h12c2.2 0 4 1.8 4 4v10c0 2.2-1.8 4-4 4H9l-5 4V8z" fill="#fff"/>
-            <circle cx="10" cy="13" r="1.5" fill="#1e3a5f"/>
-            <circle cx="14" cy="13" r="1.5" fill="#1e3a5f"/>
-            <circle cx="18" cy="13" r="1.5" fill="#1e3a5f"/>
-          </svg>
+<div class="app-container">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="top-bar">
+            <div class="profile-section">
+                <div class="avatar online" id="my-avatar">ME</div>
+
+                <div>
+                    <h3 id="my-name">Loading...</h3>
+                    <span>Online</span>
+                </div>
+            </div>
+
+            <div class="top-actions">
+                <button id="theme-toggle">🌙</button>
+                <button onclick="logout()">🚪</button>
+            </div>
         </div>
-        <span class="brand-name">NexChat</span>
-      </div>
-      <button class="icon-btn" id="new-chat-btn" title="New chat">+</button>
-    </div>
 
-    <div class="search-box">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <input type="text" placeholder="Search conversations..." id="search-input"/>
-    </div>
-
-    <div class="nav-section">
-      <span class="nav-label">DIRECT MESSAGES</span>
-      <div class="contacts-list" id="contacts-list">
-        <!-- contacts injected by JS -->
-      </div>
-    </div>
-
-    <div class="sidebar-footer">
-      <div class="user-profile">
-        <div class="avatar online" style="--c:#3b82f6" id="my-avatar">ME</div>
-        <div class="user-info">
-          <span class="user-name" id="my-name">Loading...</span>
-          <span class="user-status">Online</span>
+        <div class="search-container">
+            <input
+                type="text"
+                placeholder="Search users, groups..."
+                id="search-input"
+            >
         </div>
-        <button class="icon-btn logout-btn" title="Logout" onclick="logout()">&#x2192;</button>
-      </div>
-    </div>
-  </aside>
 
-  <!-- MAIN CHAT AREA -->
-  <main class="main-area">
-    <header class="chat-header">
-      <button class="icon-btn menu-toggle" id="menu-toggle">&#9776;</button>
-      <div class="chat-peer">
-        <div class="avatar" style="--c:#6366f1" id="peer-avatar">?</div>
-        <div>
-          <div class="peer-name" id="peer-name">Select a contact</div>
-          <div class="peer-status">
-            <span class="typing-indicator hidden" id="typing-text">typing...</span>
-            <span id="online-status">Offline</span>
-          </div>
+        <!-- Dashboard Cards -->
+        <div class="stats-grid">
+
+            <div class="stat-card">
+                <h4 id="totalChats">0</h4>
+                <p>Chats</p>
+            </div>
+
+            <div class="stat-card">
+                <h4 id="onlineUsers">0</h4>
+                <p>Online</p>
+            </div>
+
+            <div class="stat-card">
+                <h4 id="groupCount">0</h4>
+                <p>Groups</p>
+            </div>
+
         </div>
-      </div>
-      <div class="header-actions">
-        <button class="icon-btn" title="Voice call">&#128222;</button>
-        <button class="icon-btn" title="Video call">&#127909;</button>
-      </div>
-    </header>
 
-    <section class="messages-area" id="messages-area">
-      <div class="empty-state" id="empty-state">
-        <div class="empty-icon">&#128172;</div>
-        <p>Select a contact to start chatting</p>
-      </div>
-    </section>
+        <!-- USERS -->
+        <div class="section">
 
-    <footer class="input-area">
-      <div class="input-row">
-        <div class="msg-input-wrap">
-          <textarea
-            id="message-input"
-            placeholder="Type a message… (Enter to send)"
-            rows="1"
-            onkeydown="handleKeydown(event)"
-            oninput="autoResize(this)"
-          ></textarea>
+            <div class="section-header">
+                <span>Direct Messages</span>
+                <button id="new-chat-btn">+</button>
+            </div>
+
+            <div
+                id="contacts-list"
+                class="contacts-list">
+            </div>
+
         </div>
-        <button class="send-btn" id="send-btn" onclick="sendMessage()">
-          &#10148;
+
+        <!-- GROUPS -->
+        <div class="section">
+
+            <div class="section-header">
+                <span>Groups</span>
+
+                <div>
+                    <button id="create-group-btn">
+                        +
+                    </button>
+                </div>
+
+            </div>
+            
+
+            <div id="group-list">
+
+            </div>
+
+        </div>
+
+    </aside>
+
+    <!-- CHAT SECTION -->
+    <main class="chat-container">
+
+        <header class="chat-header">
+
+            <button
+                class="mobile-menu"
+                id="menu-toggle">
+                ☰
+            </button>
+
+            <div class="chat-user">
+
+                <div
+                    class="avatar"
+                    id="peer-avatar">
+                    ?
+                </div>
+
+                <div>
+
+                    <h3 id="peer-name">
+                        Select Chat
+                    </h3>
+
+                    <span id="online-status">
+                        Offline
+                    </span>
+
+                    <span
+                        id="typing-text"
+                        class="typing-indicator hidden">
+                        typing...
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="chat-actions">
+
+    <button title="Voice Call">
+        📞
+    </button>
+
+    <button title="Video Call">
+        🎥
+    </button>
+
+    <button
+        id="add-member-btn"
+        title="Add Member">
+        👥+
+    </button>
+
+    <button
+        id="delete-group-btn"
+        title="Delete Group">
+        🗑️
+    </button>
+
+</div>
+
+        </header>
+
+        <!-- MESSAGES -->
+        <section
+            id="messages-area"
+            class="messages-area">
+
+            <div id="empty-state">
+
+                <div class="welcome-box">
+
+                    <h2>
+                        Welcome to NexChat
+                    </h2>
+
+                    <p>
+                        Start a conversation or create a group.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- INPUT -->
+       <footer class="chat-footer">
+
+    <input
+        type="file"
+        id="file-input"
+        hidden
+    >
+
+    <button
+        id="upload-btn"
+        title="Upload File">
+        📎
+    </button>
+
+    <button
+        id="emoji-btn"
+        title="Emoji">
+        😀
+    </button>
+
+    <textarea
+        id="message-input"
+        placeholder="Type a message..."
+        rows="1">
+    </textarea>
+
+    <button
+        id="send-btn"
+        onclick="sendMessage()">
+        ➤
+    </button>
+
+</footer>
+<emoji-picker
+    id="emoji-picker"
+    class="hidden"
+    style="
+        position: fixed;
+        bottom: 90px;
+        right: 30px;
+        z-index: 9999;
+    ">
+</emoji-picker>
+
+    </main>
+
+</div>
+
+<!-- Create Group Modal -->
+<div
+    class="modal hidden"
+    id="group-modal">
+
+    <div class="modal-content">
+
+        <h2>Create Group</h2>
+
+        <input
+            type="text"
+            id="group-name"
+            placeholder="Group Name">
+
+        <input
+            type="text"
+            id="group-avatar"
+            placeholder="Avatar URL">
+
+        <button id="save-group">
+            Create Group
         </button>
-      </div>
-    </footer>
-  </main>
 
-  <script src="../js/dashboard.js"></script>
-  <!-- Socket.IO library loaded from your backend -->
-  <script src="http://localhost:5001/socket.io/socket.io.js"></script>
-  <script src="../js/socket.js"></script>
+    </div>
+
+</div>
+
+<script src="../js/dashboard.js"></script>
+<script src="http://localhost:5001/socket.io/socket.io.js"></script>
+<script src="../js/socket.js"></script>
+
 </body>
 </html>

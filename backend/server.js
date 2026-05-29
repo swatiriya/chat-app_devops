@@ -4,6 +4,8 @@ const express   = require('express');
 const http      = require('http');
 const cors      = require('cors');
 const { Server } = require('socket.io');
+const uploadRoutes = require('./routes/upload');
+const path = require('path');
 
 const connectDB             = require('./config/db');
 const authRoutes            = require('./routes/auth');
@@ -25,7 +27,14 @@ app.use(express.json());                  // Parse JSON request bodies
 app.use('/api/auth',     authRoutes);
 app.use('/api/messages', messageRoutes);
 app.use('/api/users',    userRoutes);
+app.use('/api/upload', uploadRoutes);
 
+app.use(
+  '/uploads',
+  express.static(
+    path.join(__dirname, 'uploads')
+  )
+);
 // Health check — visit http://localhost:5001/api/health to confirm server is running
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', time: new Date().toISOString() });

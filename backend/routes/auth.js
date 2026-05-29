@@ -69,8 +69,12 @@ router.post('/login', [
     if (!isMatch) return res.status(401).json({ message: 'Invalid email or password' });
 
     // Mark user as online
-    user.status = 'online';
-    await user.save();
+await User.findByIdAndUpdate(
+  user._id,
+  {
+    status: 'online'
+  }
+);
 
     const token = makeToken(user._id);
     res.json({ token, user });
