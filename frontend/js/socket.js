@@ -4,8 +4,12 @@ let socket = null;
 
 try {
 
-    socket = io('http://localhost:5001', {
-        auth: {
+socket = io(
+  `${window.location.protocol}//${window.location.hostname}:5001`,
+  {
+    auth: { token }
+  }
+);        auth: {
             token
         },
         transports: ['websocket']

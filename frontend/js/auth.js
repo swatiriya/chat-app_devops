@@ -1,5 +1,4 @@
-const API = 'http://localhost:5001/api';
-
+const API = `${window.location.protocol}//${window.location.hostname}:5001/api`;
 // Tab switching
 document.querySelectorAll('.tab').forEach((tab, i) => {
   tab.addEventListener('click', () => {

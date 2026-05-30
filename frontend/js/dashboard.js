@@ -1,6 +1,5 @@
-const API = 'http://localhost:5001/api';
-
-const token = localStorage.getItem('nexchat_token');
+const API = `${window.location.protocol}//${window.location.hostname}:5001/api`;
+// const token = localStorage.getItem('nexchat_token');
 const user = JSON.parse(
     localStorage.getItem('nexchat_user') || '{}'
 );
