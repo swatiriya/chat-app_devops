@@ -180,7 +180,7 @@ async () => {
     if(!userId) return;
 
     await fetch(
-        `http://localhost:5001/api/groups/${currentGroupId}/add-member`,
+        `${API}/groups/${currentGroupId}/add-member`,
         {
             method:'PUT',
             headers:{
@@ -774,7 +774,7 @@ if (uploadBtn && fileInput) {
 
                 const response =
                     await fetch(
-                        'http://localhost:5001/api/upload',
+                        '`${window.location.protocol}//${window.location.hostname}:5001/api/upload`',
                         {
                             method: 'POST',
                             headers: {

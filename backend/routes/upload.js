@@ -41,7 +41,7 @@ upload.single('file'),
         success: true,
         fileName: req.file.filename,
         fileUrl:
-            'http://localhost:5001/uploads/' +
+            `${req.protocol}://${req.get('host')}/uploads/` +
             req.file.filename
     });
 }
