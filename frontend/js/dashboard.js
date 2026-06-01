@@ -6,7 +6,11 @@ const user = JSON.parse(
 const emojiBtn = document.getElementById('emoji-btn');
 const emojiPicker = document.getElementById('emoji-picker');
 const messageInput = document.getElementById('message-input');
+const token = localStorage.getItem('nexchat_token');
 
+if (!token) {
+    window.location.href = '../index.html';
+}
 if (emojiBtn && emojiPicker) {
 
     emojiBtn.addEventListener('click', () => {
